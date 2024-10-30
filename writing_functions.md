@@ -36,11 +36,11 @@ x_vec = rnorm(25, mean = 5, sd = 3)
 (x_vec - mean(x_vec)) / sd(x_vec)
 ```
 
-    ##  [1]  0.425127546 -1.132750858 -1.793457271 -0.008842229 -0.555502042
-    ##  [6] -1.170593859 -0.586978706 -0.431259450 -1.877542773  1.012153868
-    ## [11]  0.065013613 -0.060456120 -1.293620735  1.151813625  0.379230453
-    ## [16] -0.209687103  0.693108978  0.958145345 -0.073102998  1.805223148
-    ## [21]  0.358961585  0.701874470  1.462071838 -0.890946293  1.072015966
+    ##  [1] -0.60791268 -1.26686925 -0.16621106 -0.36496871  1.39478452  0.21181503
+    ##  [7]  0.09239154  0.93144453 -0.07861124 -2.01873066  2.45532504 -0.94983605
+    ## [13] -0.28271201 -0.25332116 -1.02882275 -0.24197452  0.78577014  0.13385747
+    ## [19] -0.09361761 -0.57265389  2.05090546  1.00755218 -0.57053591 -0.13330976
+    ## [25] -0.43375867
 
 I want a function to compute z-scores.
 
@@ -61,7 +61,7 @@ z_scores = function(x) {
 z_scores(x_vec)
 ```
 
-    ## [1] 1.515469
+    ## [1] 1.199031
 
 Try my function on some other things. These should give errors.
 
@@ -88,3 +88,69 @@ z_scores(sample(c(TRUE, FALSE), 25, replace = TRUE))
 ```
 
     ## Error in z_scores(sample(c(TRUE, FALSE), 25, replace = TRUE)): Argument x should be numeric
+
+## Multiple outputs
+
+``` r
+mean_and_sd = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Cannot be computed for length 1 vectors")
+  }
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+
+  list(mean = mean_x, 
+       sd = sd_x)
+}
+```
+
+Check the function works.
+
+``` r
+x_vec = rnorm(100, mean = 3, sd = 4)
+mean_and_sd(x_vec)
+```
+
+    ## $mean
+    ## [1] 3.254325
+    ## 
+    ## $sd
+    ## [1] 4.324124
+
+## Multiple inputs
+
+``` r
+sim_data = tibble(
+  x = rnorm(30, mean = 2, sd = 3)
+)
+
+sim_data |> 
+  summarize(
+    mean = mean(x),
+    sd = sd(x)
+  )
+```
+
+    ## # A tibble: 1 × 2
+    ##    mean    sd
+    ##   <dbl> <dbl>
+    ## 1  1.59  3.10
+
+``` r
+sim_mean_sd = function(n, mu = 2, sigma = 3) {
+  
+  sim_data = tibble(
+    x = rnorm(n, mean = mu, sd = sigma),
+  )
+  
+  sim_data |> 
+    summarize(
+      mu_hat = mean(x),
+      sigma_hat = sd(x)
+    )
+}
+```
