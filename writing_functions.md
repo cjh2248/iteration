@@ -5,42 +5,17 @@ Writing Functions
 ## Do something simple
 
 ``` r
-library(tidyverse)
-```
-
-    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-    ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-    ## ✔ purrr     1.0.2     
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-
-``` r
-library(rvest)
-```
-
-    ## 
-    ## Attaching package: 'rvest'
-    ## 
-    ## The following object is masked from 'package:readr':
-    ## 
-    ##     guess_encoding
-
-``` r
-x_vec = rnorm(25, mean = 5, sd = 3)
+x_vec = rnorm(30, mean = 5, sd = 3)
 
 (x_vec - mean(x_vec)) / sd(x_vec)
 ```
 
-    ##  [1] -0.60791268 -1.26686925 -0.16621106 -0.36496871  1.39478452  0.21181503
-    ##  [7]  0.09239154  0.93144453 -0.07861124 -2.01873066  2.45532504 -0.94983605
-    ## [13] -0.28271201 -0.25332116 -1.02882275 -0.24197452  0.78577014  0.13385747
-    ## [19] -0.09361761 -0.57265389  2.05090546  1.00755218 -0.57053591 -0.13330976
-    ## [25] -0.43375867
+    ##  [1] -1.111648414  0.445108571  0.694168253 -0.479775657  0.848118212
+    ##  [6]  0.035704497 -1.853010002  0.838950080  0.601929262  0.361650003
+    ## [11]  1.165380502  0.318113165 -0.628159463  0.781631248 -0.463550923
+    ## [16] -1.491752479  0.213634812  1.122355088  0.378255304  1.693009248
+    ## [21]  0.422191163  0.552702550 -2.070878310  0.004385795  0.416343668
+    ## [26] -2.214159894 -0.110087206 -1.114314825 -0.376016807  1.019722558
 
 I want a function to compute z-scores.
 
@@ -61,7 +36,7 @@ z_scores = function(x) {
 z_scores(x_vec)
 ```
 
-    ## [1] 1.199031
+    ## [1] 2.039575
 
 Try my function on some other things. These should give errors.
 
@@ -116,12 +91,14 @@ mean_and_sd(x_vec)
 ```
 
     ## $mean
-    ## [1] 3.254325
+    ## [1] 3.438893
     ## 
     ## $sd
-    ## [1] 4.324124
+    ## [1] 3.513146
 
 ## Multiple inputs
+
+I’d like to do this with a function.
 
 ``` r
 sim_data = tibble(
@@ -138,7 +115,7 @@ sim_data |>
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  1.59  3.10
+    ## 1  1.81  2.78
 
 ``` r
 sim_mean_sd = function(n, mu = 2, sigma = 3) {
@@ -153,4 +130,13 @@ sim_mean_sd = function(n, mu = 2, sigma = 3) {
       sigma_hat = sd(x)
     )
 }
+
+sim_mean_sd(100, 6, 3) ## samp_size, mu, sigma 
 ```
+
+    ## # A tibble: 1 × 2
+    ##   mu_hat sigma_hat
+    ##    <dbl>     <dbl>
+    ## 1   6.01      3.13
+
+## Let’s review Napoleon Dynamite

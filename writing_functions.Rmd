@@ -4,15 +4,16 @@ output: github_document
 date: "2024-10-28"
 ---
 
-## Do something simple 
-
-```{r}
+```{r setup, include = FALSE}
 library(tidyverse)
 library(rvest)
 ```
 
+
+## Do something simple 
+
 ```{r}
-x_vec = rnorm(25, mean = 5, sd = 3)
+x_vec = rnorm(30, mean = 5, sd = 3)
 
 (x_vec - mean(x_vec)) / sd(x_vec)
 ```
@@ -69,7 +70,9 @@ x_vec = rnorm(100, mean = 3, sd = 4)
 mean_and_sd(x_vec)
 ```
 
-## Multiple inputs 
+## Multiple inputs
+
+I'd like to do this with a function. 
 
 ```{r}
 sim_data = tibble(
@@ -82,8 +85,9 @@ sim_data |>
     sd = sd(x)
   )
 ```
+
 ```{r}
-sim_mean_sd = function(n, mu = 2, sigma = 3) {
+sim_mean_sd = function(n, mu = 2, sigma = 4) {
   
   sim_data = tibble(
     x = rnorm(n, mean = mu, sd = sigma),
@@ -95,8 +99,17 @@ sim_mean_sd = function(n, mu = 2, sigma = 3) {
       sigma_hat = sd(x)
     )
 }
+
+sim_mean_sd(100, 6, 3) ## samp_size, mu, sigma 
+
+sim_mean_sd(100) ## uses sigma default = 6
 ```
 
+## Let's review Napoleon Dynamite 
+
+```{r}
+
+```
 
 
 
